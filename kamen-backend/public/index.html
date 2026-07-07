@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kam Men · Cocina Cantonesa desde 1983</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600;9..144,700&family=Noto+Serif+SC:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1A1410;
+    --ink-soft:#2b2118;
+    --lacquer:#C8102E;
+    --lacquer-deep:#8f0c20;
+    --gold:#D4A24C;
+    --gold-soft:#e8c98a;
+    --paper:#F5EFE3;
+    --paper-dim:#ece2cd;
+    --jade:#2D5F4C;
+    --jade-deep:#1f4536;
+    --line: rgba(212,162,76,0.35);
+
+    --display: 'Fraunces', serif;
+    --cjk: 'Noto Serif SC', serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  :focus-visible{outline:3px solid var(--jade); outline-offset:2px;}
+
+  .wrap{max-width:1140px; margin:0 auto; padding:0 28px;}
+
+  /* ---------- decorative motifs ---------- */
+  .huiwen-border{
+    background-image:
+      repeating-linear-gradient(90deg, var(--gold) 0 2px, transparent 2px 10px);
+    height:3px;
+    opacity:.55;
+  }
+  .seal{
+    width:54px; height:54px; border-radius:50%;
+    border:2px solid var(--lacquer);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--lacquer); font-family:var(--cjk); font-size:22px;
+    flex:none;
+  }
+
+  /* ---------- top utility bar ---------- */
+  .utility-bar{
+    background:var(--ink);
+    color:var(--paper-dim);
+    font-family:var(--mono);
+    font-size:12.5px;
+    letter-spacing:.02em;
+  }
+  .utility-bar .wrap{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:9px 28px; gap:16px; flex-wrap:wrap;
+  }
+  .utility-bar a{ text-decoration:none; opacity:.85; transition:opacity .15s; }
+  .utility-bar a:hover{opacity:1; color:var(--gold-soft);}
+  .utility-left{display:flex; gap:22px; flex-wrap:wrap;}
+  .utility-left span{opacity:.55;}
+
+  /* ---------- header / nav ---------- */
+  header.main{
+    background:var(--paper);
+    border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:50;
+  }
+  nav.row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 28px;
+  }
+  .brand{
+    display:flex; align-items:center; gap:14px;
+    text-decoration:none; color:var(--ink);
+  }
+  .brand .cjk{
+    font-family:var(--cjk); font-size:15px; line-height:1.1;
+    color:var(--lacquer); white-space:pre-line; font-weight:700;
+  }
+  .brand .name{
+    font-family:var(--display); font-weight:700; font-size:26px;
+    letter-spacing:.01em;
+  }
+  .brand .sub{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--jade-deep); display:block; margin-top:2px;
+  }
+
+  nav .links{
+    display:flex; align-items:center; gap:34px;
+    font-size:14.5px; font-weight:500;
+  }
+  nav .links a{
+    text-decoration:none; color:var(--ink-soft);
+    position:relative; padding:6px 0;
+  }
+  nav .links a::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:2px;
+    background:var(--lacquer); transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
+  nav .links a:hover::after{transform:scaleX(1);}
+
+  .nav-actions{display:flex; gap:10px; align-items:center;}
+
+  .btn{
+    font-family:var(--body); font-weight:600; font-size:14px;
+    padding:10px 20px; border-radius:3px; border:1px solid transparent;
+    cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{
+    background:var(--lacquer); color:var(--paper);
+  }
+  .btn-primary:hover{background:var(--lacquer-deep); box-shadow:0 4px 14px rgba(200,16,46,.35);}
+  .btn-ghost{
+    background:transparent; color:var(--ink); border-color:var(--ink);
+  }
+  .btn-ghost:hover{background:var(--ink); color:var(--paper);}
+  .btn-jade{background:var(--jade); color:var(--paper);}
+  .btn-jade:hover{background:var(--jade-deep);}
+  .btn-block{width:100%; justify-content:center;}
+
+  .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:8px;}
+  .menu-toggle svg{width:24px; height:24px; stroke:var(--ink);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    background:
+      radial-gradient(ellipse at 75% 0%, rgba(200,16,46,0.10), transparent 55%),
+      linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+    color:var(--paper);
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid; grid-template-columns:1.1fr .9fr; gap:50px;
+    padding:96px 28px 80px; align-items:center;
+  }
+  .hero-eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--gold-soft);
+    display:flex; align-items:center; gap:12px; margin-bottom:22px;
+  }
+  .hero-eyebrow .dash{width:34px; height:1px; background:var(--gold-soft); opacity:.6;}
+  .hero h1{
+    font-family:var(--display); font-weight:600; font-size:clamp(38px,5vw,62px);
+    line-height:1.05; margin:0 0 22px; letter-spacing:-.01em;
+  }
+  .hero h1 em{font-style:normal; color:var(--gold-soft); font-weight:700;}
+  .hero p.lede{
+    font-size:17px; color:rgba(245,239,227,0.78); max-width:480px; margin:0 0 34px;
+  }
+  .hero-cta{display:flex; gap:14px; flex-wrap:wrap;}
+  .hero-stats{
+    display:flex; gap:34px; margin-top:52px; flex-wrap:wrap;
+  }
+  .hero-stats div{font-family:var(--mono);}
+  .hero-stats .num{font-size:26px; color:var(--gold-soft); font-weight:500;}
+  .hero-stats .lbl{font-size:11.5px; color:rgba(245,239,227,0.55); text-transform:uppercase; letter-spacing:.08em;}
+
+  .hero-art{
+    position:relative; aspect-ratio:4/5; border-radius:4px;
+    background:
+      linear-gradient(160deg, rgba(212,162,76,0.18), transparent 60%),
+      linear-gradient(200deg, var(--jade-deep), #16271f 70%);
+    border:1px solid rgba(212,162,76,0.3);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-art .lanterns{position:absolute; inset:0;}
+  .hero-art .plate{
+    width:62%; position:relative; z-index:2;
+  }
+  .hero-art .cjk-big{
+    position:absolute; right:-10px; bottom:-18px; font-family:var(--cjk);
+    font-size:160px; color:rgba(200,16,46,0.16); line-height:1; z-index:1; font-weight:700;
+  }
+
+  /* ---------- marquee strip ---------- */
+  .strip{
+    background:var(--lacquer); color:var(--paper);
+    overflow:hidden; white-space:nowrap; border-top:1px solid var(--gold); border-bottom:1px solid var(--gold);
+  }
+  .strip-inner{
+    display:inline-flex; gap:48px; padding:11px 0;
+    animation:scroll 28s linear infinite;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.06em; text-transform:uppercase;
+  }
+  .strip-inner span{display:inline-flex; align-items:center; gap:48px;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion: reduce){ .strip-inner{animation:none;} }
+
+  /* ---------- section heading pattern ---------- */
+  .section{padding:96px 0;}
+  .section.tight{padding:72px 0;}
+  .sec-head{
+    display:flex; align-items:flex-end; justify-content:space-between;
+    gap:24px; margin-bottom:48px; flex-wrap:wrap;
+  }
+  .sec-head .tag{
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--jade-deep); display:block; margin-bottom:10px;
+  }
+  .sec-head h2{
+    font-family:var(--display); font-size:clamp(28px,3.4vw,42px); margin:0;
+    font-weight:600; letter-spacing:-.01em;
+  }
+  .sec-head p{max-width:420px; color:#5b5346; font-size:15px; margin:0;}
+
+  /* ---------- story ---------- */
+  .story{background:var(--paper);}
+  .story .grid{display:grid; grid-template-columns:.85fr 1.15fr; gap:64px; align-items:start;}
+  .story .figure{
+    position:relative; background:var(--ink); border-radius:4px; overflow:hidden;
+    aspect-ratio:3/4; display:flex; align-items:center; justify-content:center;
+  }
+  .story .figure .cjk-mark{font-family:var(--cjk); color:var(--gold-soft); font-size:90px; opacity:.85;}
+  .story .figure::after{
+    content:''; position:absolute; inset:14px; border:1px solid rgba(212,162,76,0.4);
+    pointer-events:none;
+  }
+  .story p{color:#3a3328; font-size:16px; margin:0 0 18px;}
+  .story .pull{
+    font-family:var(--display); font-style:italic; font-size:21px; color:var(--lacquer-deep);
+    border-left:3px solid var(--lacquer); padding-left:20px; margin:28px 0;
+  }
+  .founders-row{display:flex; gap:28px; margin-top:32px; flex-wrap:wrap;}
+  .founders-row .item{font-family:var(--mono); font-size:12.5px; color:var(--jade-deep);}
+  .founders-row .item b{display:block; font-family:var(--display); font-size:20px; color:var(--ink); font-weight:600;}
+
+  /* ---------- menu ---------- */
+  .menu{background:var(--ink); color:var(--paper);}
+  .menu .sec-head h2{color:var(--paper);}
+  .menu .sec-head .tag{color:var(--gold-soft);}
+  .menu .sec-head p{color:rgba(245,239,227,0.6);}
+  .menu-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(212,162,76,0.25);}
+  .dish{
+    background:var(--ink-soft); padding:32px 28px; position:relative;
+    transition:background .2s ease;
+  }
+  .dish:hover{background:#352a1f;}
+  .dish .no{font-family:var(--mono); font-size:12px; color:var(--gold-soft); opacity:.7;}
+  .dish h3{font-family:var(--display); font-size:21px; margin:14px 0 8px; font-weight:600;}
+  .dish p{font-size:13.5px; color:rgba(245,239,227,0.62); margin:0 0 18px; min-height:42px;}
+  .dish .price{font-family:var(--mono); font-size:15px; color:var(--gold-soft); display:flex; justify-content:space-between; align-items:center; border-top:1px dashed rgba(212,162,76,0.3); padding-top:14px;}
+  .dish .price .seal-mini{
+    width:26px; height:26px; border-radius:50%; border:1px solid var(--lacquer);
+    color:var(--lacquer); display:flex; align-items:center; justify-content:center;
+    font-family:var(--cjk); font-size:11px;
+  }
+  .menu-cta{text-align:center; margin-top:44px;}
+
+  /* ---------- reviews ---------- */
+  .reviews{background:var(--paper-dim);}
+  .review-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line);}
+  .review-card{background:var(--paper); padding:30px 28px;}
+  .review-card .stars{color:var(--lacquer); font-size:14px; letter-spacing:2px; margin-bottom:14px;}
+  .review-card p{font-size:14.5px; color:#3a3328; margin:0 0 16px; font-style:italic;}
+  .review-card .who{font-family:var(--mono); font-size:12px; color:var(--jade-deep); text-transform:uppercase; letter-spacing:.05em;}
+
+  /* ---------- reservation ---------- */
+  .reserve{
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(212,162,76,.25), transparent 60%),
+      var(--jade-deep);
+    color:var(--paper); position:relative; overflow:hidden;
+  }
+  .reserve .wrap{display:grid; grid-template-columns:.85fr 1.15fr; gap:60px; align-items:flex-start;}
+  .reserve-intro .tag{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft); display:block; margin-bottom:14px;}
+  .reserve-intro h2{font-family:var(--display); font-size:clamp(30px,3.6vw,44px); margin:0 0 18px; font-weight:600; line-height:1.08;}
+  .reserve-intro p{color:rgba(245,239,227,0.8); font-size:15.5px; max-width:380px; margin:0 0 28px;}
+  .reserve-info{display:flex; flex-direction:column; gap:18px; margin-top:28px;}
+  .reserve-info .line{display:flex; gap:14px; align-items:flex-start; font-size:14px; color:rgba(245,239,227,0.85);}
+  .reserve-info .ic{width:34px; height:34px; border-radius:50%; border:1px solid var(--gold-soft); display:flex; align-items:center; justify-content:center; flex:none; font-size:15px;}
+
+  .ticket{
+    background:var(--paper); color:var(--ink); border-radius:6px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,.45);
+    position:relative; overflow:hidden;
+  }
+  .ticket-top{
+    background:var(--lacquer); color:var(--paper); padding:20px 30px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .ticket-top .cjk{font-family:var(--cjk); font-size:14px;}
+  .ticket-top .label{font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;}
+  .ticket-perf{
+    height:14px; background-image: radial-gradient(circle, var(--jade-deep) 4px, transparent 5px);
+    background-size:22px 14px; background-position:left center; background-repeat:repeat-x;
+    background-color:var(--lacquer);
+  }
+  form#reserveForm{padding:32px 34px 34px;}
+  .field-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  .field{display:flex; flex-direction:column; gap:7px;}
+  .field.full{grid-column:1/-1;}
+  .field label{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.07em; color:var(--jade-deep);}
+  .field input, .field select, .field textarea{
+    font-family:var(--body); font-size:15px; padding:11px 13px; border:1.5px solid #d8cdb4;
+    border-radius:3px; background:#fff; color:var(--ink); transition:border-color .15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--jade); outline:none;}
+  .field textarea{resize:vertical; min-height:64px; font-family:var(--body);}
+  .party-stepper{display:flex; align-items:center; gap:0; border:1.5px solid #d8cdb4; border-radius:3px; overflow:hidden;}
+  .party-stepper button{
+    background:var(--paper-dim); border:none; width:40px; height:42px; font-size:18px; cursor:pointer; color:var(--ink);
+  }
+  .party-stepper button:hover{background:var(--gold-soft);}
+  .party-stepper span{flex:1; text-align:center; font-family:var(--mono); font-size:15px;}
+  .reserve-footer-row{display:flex; justify-content:space-between; align-items:center; gap:18px; margin-top:8px; flex-wrap:wrap;}
+  .reserve-note{font-size:12.5px; color:#5b5346;}
+  #reserveMsg{
+    margin-top:16px; padding:13px 16px; border-radius:3px; font-size:14px; display:none;
+  }
+  #reserveMsg.ok{display:block; background:rgba(45,95,76,0.1); color:var(--jade-deep); border:1px solid var(--jade);}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink); color:rgba(245,239,227,0.7); padding:64px 0 28px;}
+  .foot-grid{display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:44px; border-bottom:1px solid rgba(212,162,76,0.2);}
+  footer h4{font-family:var(--mono); font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--gold-soft); margin:0 0 18px;}
+  footer .brand-foot{font-family:var(--display); font-size:24px; color:var(--paper); margin:0 0 12px; font-weight:700;}
+  footer p{font-size:13.5px; margin:0 0 10px; line-height:1.6;}
+  footer ul{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:10px; font-size:13.5px;}
+  footer a{text-decoration:none; transition:color .15s;}
+  footer a:hover{color:var(--gold-soft);}
+  .foot-bottom{display:flex; justify-content:space-between; padding-top:24px; font-size:12px; flex-wrap:wrap; gap:10px; color:rgba(245,239,227,0.4); font-family:var(--mono);}
+
+  /* ---------- modal (login) ---------- */
+  .modal-overlay{
+    position:fixed; inset:0; background:rgba(26,20,16,0.7); backdrop-filter:blur(3px);
+    display:none; align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+  .modal{
+    background:var(--paper); width:100%; max-width:400px; border-radius:6px; overflow:hidden;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,.5); position:relative;
+  }
+  .modal-head{background:var(--ink); color:var(--paper); padding:24px 28px; display:flex; justify-content:space-between; align-items:center;}
+  .modal-head h3{font-family:var(--display); font-size:21px; margin:0; font-weight:600;}
+  .modal-close{background:none; border:none; color:var(--paper); font-size:22px; cursor:pointer; line-height:1; opacity:.7;}
+  .modal-close:hover{opacity:1;}
+  .modal-body{padding:28px;}
+  .modal-tabs{display:flex; gap:0; margin-bottom:22px; border-bottom:1px solid var(--line);}
+  .modal-tabs button{
+    flex:1; background:none; border:none; padding:10px 0; font-family:var(--body); font-weight:600;
+    font-size:14px; color:#8a8070; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px;
+  }
+  .modal-tabs button.active{color:var(--ink); border-bottom-color:var(--lacquer);}
+  .modal .field{margin-bottom:16px;}
+  .modal-foot-note{font-size:12.5px; color:#5b5346; text-align:center; margin-top:16px;}
+  #authMsg{font-size:13.5px; padding:10px 14px; border-radius:3px; margin-top:14px; display:none;}
+  #authMsg.show{display:block; background:rgba(45,95,76,0.1); color:var(--jade-deep); border:1px solid var(--jade);}
+  .userchip{
+    display:flex; align-items:center; gap:9px; font-size:14px; font-weight:600;
+  }
+  .userchip .av{width:30px; height:30px; border-radius:50%; background:var(--jade); color:var(--paper); display:flex; align-items:center; justify-content:center; font-family:var(--display); font-size:14px;}
+
+  /* ---------- offer badge on dishes ---------- */
+  .dish{position:relative;}
+  .dish.on-offer{background:#3d2a1a;}
+  .dish.on-offer:hover{background:#46311e;}
+  .offer-badge{
+    position:absolute; top:14px; right:14px; background:var(--lacquer); color:var(--paper);
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+    padding:4px 10px; border-radius:20px; font-weight:600;
+  }
+  .dish .price .old{
+    text-decoration:line-through; opacity:.5; font-size:12.5px; margin-right:8px;
+  }
+
+  /* ---------- admin entry point ---------- */
+  .admin-bar{
+    display:none; background:var(--ink-soft); color:var(--gold-soft);
+    font-family:var(--mono); font-size:12.5px; padding:8px 0;
+  }
+  .admin-bar.show{display:block;}
+  .admin-bar .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;}
+  .admin-bar a{text-decoration:underline; cursor:pointer;}
+
+  /* ---------- admin panel ---------- */
+  .admin-overlay{
+    position:fixed; inset:0; background:rgba(26,20,16,0.82); z-index:300;
+    display:none; align-items:flex-start; justify-content:center; padding:32px 20px; overflow-y:auto;
+  }
+  .admin-overlay.show{display:flex;}
+  .admin-panel{
+    background:var(--paper); width:100%; max-width:980px; border-radius:8px; overflow:hidden;
+    box-shadow:0 50px 100px -20px rgba(0,0,0,.6); margin-bottom:32px;
+  }
+  .admin-head{
+    background:var(--ink); color:var(--paper); padding:22px 30px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .admin-head h3{font-family:var(--display); font-size:22px; margin:0; font-weight:600;}
+  .admin-head .who{font-family:var(--mono); font-size:12px; color:var(--gold-soft); margin-top:4px; display:block;}
+  .admin-tabs{
+    display:flex; gap:0; background:var(--paper-dim); border-bottom:1px solid var(--line); padding:0 30px;
+  }
+  .admin-tabs button{
+    background:none; border:none; padding:16px 4px; margin-right:30px; font-family:var(--body);
+    font-weight:600; font-size:14.5px; color:#8a8070; cursor:pointer; border-bottom:2px solid transparent;
+  }
+  .admin-tabs button.active{color:var(--ink); border-bottom-color:var(--lacquer);}
+  .admin-body{padding:28px 30px 34px; max-height:62vh; overflow-y:auto;}
+  .admin-section{display:none;}
+  .admin-section.active{display:block;}
+
+  .admin-table{width:100%; border-collapse:collapse; font-size:14px;}
+  .admin-table th{
+    text-align:left; font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em;
+    color:var(--jade-deep); padding:9px 10px; border-bottom:1.5px solid var(--ink);
+  }
+  .admin-table td{padding:11px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  .admin-table tr:last-child td{border-bottom:none;}
+  .status-pill{
+    font-family:var(--mono); font-size:11px; padding:4px 10px; border-radius:20px; text-transform:uppercase;
+    display:inline-block; font-weight:600;
+  }
+  .status-pendiente{background:rgba(212,162,76,.25); color:#8a6a1f;}
+  .status-confirmada{background:rgba(45,95,76,.18); color:var(--jade-deep);}
+  .status-cancelada{background:rgba(200,16,46,.12); color:var(--lacquer-deep);}
+  .row-actions{display:flex; gap:6px; flex-wrap:wrap;}
+  .mini-btn{
+    font-family:var(--body); font-size:12px; font-weight:600; padding:6px 11px; border-radius:3px;
+    border:1px solid #d8cdb4; background:#fff; cursor:pointer; transition:.15s;
+  }
+  .mini-btn:hover{border-color:var(--ink);}
+  .mini-btn.confirm{color:var(--jade-deep); border-color:var(--jade);}
+  .mini-btn.confirm:hover{background:var(--jade); color:#fff;}
+  .mini-btn.cancel{color:var(--lacquer-deep); border-color:var(--lacquer);}
+  .mini-btn.cancel:hover{background:var(--lacquer); color:#fff;}
+  .mini-btn.delete{color:#8a8070;}
+  .mini-btn.delete:hover{background:#8a8070; color:#fff;}
+
+  .dish-edit-row{
+    display:grid; grid-template-columns:1.6fr .9fr .7fr auto auto; gap:10px; align-items:center;
+    padding:12px 10px; border-bottom:1px solid var(--line);
+  }
+  .dish-edit-row:first-child{
+    font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--jade-deep);
+    border-bottom:1.5px solid var(--ink); padding-bottom:9px;
+  }
+  .dish-edit-row input[type="text"], .dish-edit-row input[type="number"]{
+    font-family:var(--body); font-size:13.5px; padding:7px 9px; border:1.3px solid #d8cdb4; border-radius:3px; width:100%;
+  }
+  .toggle-offer{display:flex; align-items:center; gap:7px; font-size:12.5px;}
+  .new-dish-form{
+    display:grid; grid-template-columns:1.6fr .9fr .7fr auto; gap:10px; margin-top:18px; padding-top:18px;
+    border-top:1.5px dashed var(--line); align-items:center;
+  }
+  .new-dish-form input{font-family:var(--body); font-size:13.5px; padding:8px 10px; border:1.3px solid #d8cdb4; border-radius:3px;}
+
+  .empty-state{
+    text-align:center; padding:36px 20px; color:#8a8070; font-size:14px; font-style:italic;
+  }
+
+  /* ---------- account panel (cliente) ---------- */
+  .account-overlay{
+    position:fixed; inset:0; background:rgba(26,20,16,0.75); z-index:300;
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .account-overlay.show{display:flex;}
+  .account-panel{
+    background:var(--paper); width:100%; max-width:480px; border-radius:8px; overflow:hidden;
+    box-shadow:0 40px 80px -20px rgba(0,0,0,.5);
+  }
+  .account-panel .modal-head{background:var(--jade-deep);}
+  .account-body{padding:26px 28px 30px; max-height:60vh; overflow-y:auto;}
+  .my-res-card{
+    border:1px solid var(--line); border-radius:5px; padding:14px 16px; margin-bottom:12px;
+    display:flex; justify-content:space-between; align-items:flex-start; gap:10px; font-size:13.5px;
+  }
+  .my-res-card .d{font-family:var(--mono); font-size:12px; color:var(--jade-deep); margin-bottom:4px;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:920px){
+    .hero .wrap{grid-template-columns:1fr; padding-top:48px;}
+    .hero-art{max-width:380px; margin:0 auto;}
+    .story .grid{grid-template-columns:1fr;}
+    .story .figure{max-width:340px;}
+    .menu-grid{grid-template-columns:repeat(2,1fr);}
+    .review-grid{grid-template-columns:1fr;}
+    .reserve .wrap{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    nav .links{
+      position:fixed; top:73px; left:0; right:0; background:var(--paper);
+      flex-direction:column; align-items:flex-start; padding:20px 28px; gap:18px;
+      border-bottom:1px solid var(--line); transform:translateY(-110%); transition:transform .25s ease;
+      box-shadow:0 12px 24px rgba(0,0,0,.08);
+    }
+    nav .links.open{transform:translateY(0);}
+    .menu-toggle{display:block;}
+    .nav-actions .btn-ghost{display:none;}
+    .menu-grid{grid-template-columns:1fr;}
+    .field-row{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    .dish-edit-row, .new-dish-form{grid-template-columns:1fr 1fr;}
+    .admin-table{font-size:12.5px;}
+    .admin-table thead{display:none;}
+    .admin-table tr{display:block; border-bottom:2px solid var(--ink); padding:10px 0;}
+    .admin-table td{display:flex; justify-content:space-between; gap:10px; border-bottom:none; padding:5px 4px;}
+    .admin-table td::before{content:attr(data-label); font-family:var(--mono); font-size:10.5px; color:#8a8070; text-transform:uppercase;}
+  }
+</style>
+</head>
+<body>
+
+<div class="utility-bar">
+  <div class="wrap">
+    <div class="utility-left">
+      <span>Av. Roosevelt 6271, Miraflores · Lima</span>
+      <a href="tel:+51974635013">+51 974 635 013</a>
+    </div>
+    <div class="utility-left">
+      <span>Hoy: 12:00 – 23:00</span>
+      <a href="https://wa.me/51974635013" target="_blank" rel="noopener">WhatsApp →</a>
+    </div>
+  </div>
+</div>
+
+<header class="main">
+  <nav class="row">
+    <a href="#inicio" class="brand">
+      <span class="cjk">錦明<br>酒家</span>
+      <span>
+        <span class="name">Kam&nbsp;Men</span>
+        <span class="sub">Cocina cantonesa · Lima 1983</span>
+      </span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+
+    <div class="links" id="navLinks">
+      <a href="#historia">Historia</a>
+      <a href="#carta">Carta</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#reservar">Reservas</a>
+      <a href="#contacto">Ubicación</a>
+    </div>
+
+    <div class="nav-actions" id="navActions">
+      <button class="btn btn-ghost" id="loginTrigger">Iniciar sesión</button>
+      <a href="#reservar" class="btn btn-primary">Reservar mesa</a>
+    </div>
+  </nav>
+</header>
+
+<div class="admin-bar" id="adminBar">
+  <div class="wrap">
+    <span>Sesión de administrador activa.</span>
+    <a id="openAdminPanel">Abrir panel de administración →</a>
+  </div>
+</div>
+
+<section class="hero" id="inicio">
+  <div class="wrap">
+    <div>
+      <div class="hero-eyebrow"><span class="dash"></span> Desde 1983 · Miraflores, Lima</div>
+      <h1>Cuarenta años de cocina cantonesa, <em>servidos con honestidad.</em></h1>
+      <p class="lede">Kam Men nació para fijar un estándar: el del buen gusto oriental, hecho con técnica cantonesa y producto peruano, plato a plato, desde hace cuatro décadas.</p>
+      <div class="hero-cta">
+        <a href="#reservar" class="btn btn-primary">Reservar una mesa</a>
+        <a href="#carta" class="btn btn-ghost" style="border-color:rgba(245,239,227,.4); color:var(--paper);">Ver la carta</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">1983</div><div class="lbl">Año de fundación</div></div>
+        <div><div class="num">40+</div><div class="lbl">Años de tradición</div></div>
+        <div><div class="num">120+</div><div class="lbl">Platos cantoneses</div></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <span class="cjk-big">家</span>
+      <svg class="plate" viewBox="0 0 300 300" fill="none">
+        <circle cx="150" cy="150" r="140" fill="#0f1a15" stroke="#D4A24C" stroke-width="2"/>
+        <circle cx="150" cy="150" r="112" fill="#162720" stroke="#D4A24C" stroke-opacity="0.5" stroke-width="1"/>
+        <circle cx="150" cy="150" r="78" fill="#1c3027"/>
+        <g opacity="0.9">
+          <ellipse cx="120" cy="135" rx="34" ry="22" fill="#C8102E" opacity="0.85"/>
+          <ellipse cx="168" cy="150" rx="30" ry="20" fill="#e8c98a" opacity="0.9"/>
+          <ellipse cx="140" cy="172" rx="28" ry="18" fill="#2D5F4C"/>
+          <ellipse cx="178" cy="118" rx="20" ry="14" fill="#C8102E" opacity="0.7"/>
+        </g>
+        <circle cx="150" cy="150" r="140" fill="none" stroke="#D4A24C" stroke-width="1" stroke-dasharray="2 6" opacity="0.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-inner">
+    <span>ARROZ CHAUFA KAM MEN &nbsp;·&nbsp; PATO PEKINÉS &nbsp;·&nbsp; LANGOSTINOS KAM LU WANTÁN &nbsp;·&nbsp; CHANCHO ASADO A LA CANTONESA &nbsp;·&nbsp; TALLARÍN SALTADO &nbsp;·&nbsp; </span>
+    <span>ARROZ CHAUFA KAM MEN &nbsp;·&nbsp; PATO PEKINÉS &nbsp;·&nbsp; LANGOSTINOS KAM LU WANTÁN &nbsp;·&nbsp; CHANCHO ASADO A LA CANTONESA &nbsp;·&nbsp; TALLARÍN SALTADO &nbsp;·&nbsp; </span>
+  </div>
+</div>
+
+<section class="story" id="historia">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag">Nuestra historia</span>
+        <h2>Bienvenidos a Chifa Kam Men</h2>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="figure"><span class="cjk-mark">錦明酒家</span></div>
+      <div>
+        <p>Desde 1983, año en que se fundó Kam Men, nuestro objetivo ha sido el mismo: ofrecer lo mejor de la cocina china, la ya famosa cantonesa, con la misma disciplina con la que se sirve en Guangzhou y la misma calidez con la que se recibe en una casa limeña.</p>
+        <p class="pull">Kam Men nació con la finalidad de establecer un nuevo concepto en comida china: la tradición del buen gusto oriental.</p>
+        <p>Cuatro décadas después, seguimos en la misma esquina de Miraflores, con la misma receta de respeto por el ingrediente y por quien se sienta a nuestra mesa. No perseguimos tendencias; sostenemos un oficio.</p>
+        <div class="founders-row">
+          <div class="item"><b>1983</b>Apertura del primer local</div>
+          <div class="item"><b>3</b>Generaciones de cocineros</div>
+          <div class="item"><b>Miraflores</b>Una sola dirección, siempre</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu" id="carta">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag">La carta</span>
+        <h2>Platos que nos representan</h2>
+      </div>
+      <p>Una selección breve de la carta completa, la que más pedimos preparar desde hace años.</p>
+    </div>
+    <div class="menu-grid" id="menuGrid">
+      <!-- Los platos se renderizan dinámicamente desde la base de datos (DB.dishes) -->
+    </div>
+    <div class="menu-cta">
+      <a href="#reservar" class="btn btn-jade">Pedir mesa para probar la carta completa</a>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="opiniones">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="tag">Lo que dicen</span>
+        <h2>Cuatro décadas de mesas servidas</h2>
+      </div>
+    </div>
+  </div>
+  <div class="review-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Vengo desde que era niño con mis padres. El chaufa sigue sabiendo exactamente igual, y eso hoy es raro de encontrar."</p>
+      <div class="who">Jorge R. — cliente desde 1995</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"El pato pekinés es el mejor que he probado en Lima. La piel queda perfecta y el servicio es atento sin ser invasivo."</p>
+      <div class="who">Mariela C. — Google Reviews</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Reservamos para 12 personas por un cumpleaños y todo salió impecable. Se nota la experiencia de tantos años."</p>
+      <div class="who">Familia Tanaka — evento privado</div>
+    </div>
+  </div>
+</section>
+
+<section class="reserve" id="reservar">
+  <div class="wrap">
+    <div class="reserve-intro">
+      <span class="tag">Reservar una mesa</span>
+      <h2>Guárdanos un lugar en la mesa.</h2>
+      <p>Confirmamos por WhatsApp o correo en menos de 2 horas. Para grupos de más de 15 personas, escríbenos directamente.</p>
+      <div class="reserve-info">
+        <div class="line"><span class="ic">☏</span> +51 974 635 013 (también WhatsApp)</div>
+        <div class="line"><span class="ic">⏱</span> Lunes a domingo, 12:00 – 23:00</div>
+        <div class="line"><span class="ic">⚲</span> Av. Roosevelt 6271, Miraflores</div>
+      </div>
+    </div>
+
+    <div class="ticket">
+      <div class="ticket-top">
+        <span class="cjk">訂座</span>
+        <span class="label">Boleto de reserva · Kam Men</span>
+      </div>
+      <div class="ticket-perf"></div>
+      <form id="reserveForm">
+        <div class="field-row">
+          <div class="field">
+            <label for="rName">Nombre completo</label>
+            <input id="rName" type="text" placeholder="Ej. María Gutiérrez" required>
+          </div>
+          <div class="field">
+            <label for="rPhone">Teléfono / WhatsApp</label>
+            <input id="rPhone" type="tel" placeholder="9XX XXX XXX" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="rDate">Fecha</label>
+            <input id="rDate" type="date" required>
+          </div>
+          <div class="field">
+            <label for="rTime">Hora</label>
+            <select id="rTime" required>
+              <option value="">Elegir hora</option>
+              <option>12:30</option><option>13:00</option><option>13:30</option>
+              <option>19:30</option><option>20:00</option><option>20:30</option><option>21:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field full">
+            <label>Número de personas</label>
+            <div class="party-stepper">
+              <button type="button" id="partyMinus" aria-label="Reducir comensales">–</button>
+              <span id="partyCount">2</span>
+              <button type="button" id="partyPlus" aria-label="Aumentar comensales">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field full">
+            <label for="rNote">Pedido especial (opcional)</label>
+            <textarea id="rNote" placeholder="Alergias, celebración, mesa preferida…"></textarea>
+          </div>
+        </div>
+        <div class="reserve-footer-row">
+          <span class="reserve-note">Te escribiremos para confirmar disponibilidad.</span>
+          <button type="submit" class="btn btn-primary">Confirmar reserva</button>
+        </div>
+        <div id="reserveMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <p class="brand-foot">錦明酒家 Kam Men</p>
+        <p>Av. Roosevelt 6271, República de Panamá — Miraflores, Lima.</p>
+        <p>Cocina cantonesa desde 1983. La tradición del buen gusto oriental.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <ul>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#carta">Carta</a></li>
+          <li><a href="#opiniones">Opiniones</a></li>
+          <li><a href="#reservar">Reservas</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contacto</h4>
+        <ul>
+          <li><a href="tel:+515052168">505-2168</a></li>
+          <li><a href="tel:+51974635013">974 635 013 (Cel.)</a></li>
+          <li><a href="https://wa.me/51974635013" target="_blank" rel="noopener">WhatsApp directo</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Horario</h4>
+        <ul>
+          <li>Lun – Dom</li>
+          <li>12:00 – 23:00</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 1983–2026 Chifa Kam Men. Todos los derechos reservados.</span>
+      <span>Sitio rediseñado · v2.0</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Login / Registro modal -->
+<div class="modal-overlay" id="authOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Mi cuenta Kam Men</h3>
+      <button class="modal-close" id="authClose" aria-label="Cerrar">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-tabs">
+        <button class="active" id="tabLogin">Iniciar sesión</button>
+        <button id="tabSignup">Crear cuenta</button>
+      </div>
+
+      <form id="loginForm">
+        <div class="field">
+          <label for="liEmail">Correo</label>
+          <input id="liEmail" type="email" required placeholder="admin@kammen.pe">
+        </div>
+        <div class="field">
+          <label for="liPass">Contraseña</label>
+          <input id="liPass" type="password" required placeholder="admin123">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+      </form>
+
+      <form id="signupForm" style="display:none;">
+        <div class="field">
+          <label for="suName">Nombre</label>
+          <input id="suName" type="text" required placeholder="Tu nombre">
+        </div>
+        <div class="field">
+          <label for="suEmail">Correo</label>
+          <input id="suEmail" type="email" required placeholder="tu@correo.com">
+        </div>
+        <div class="field">
+          <label for="suPhone">Teléfono</label>
+          <input id="suPhone" type="tel" placeholder="9XX XXX XXX">
+        </div>
+        <div class="field">
+          <label for="suPass">Contraseña</label>
+          <input id="suPass" type="password" required placeholder="Mínimo 6 caracteres" minlength="6">
+        </div>
+        <button type="submit" class="btn btn-jade btn-block">Crear cuenta</button>
+      </form>
+
+      <div id="authMsg"></div>
+      <p class="modal-foot-note">Cuentas de prueba: <b>admin@kammen.pe</b> / admin123 (administrador) · <b>maria@cliente.pe</b> / cliente123 (cliente)</p>
+    </div>
+  </div>
+</div>
+
+<!-- Panel de administración -->
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <div class="admin-head">
+      <div>
+        <h3>Panel de administración</h3>
+        <span class="who" id="adminWho">Kam Men</span>
+      </div>
+      <button class="modal-close" id="adminClose" aria-label="Cerrar">×</button>
+    </div>
+    <div class="admin-tabs">
+      <button class="active" data-tab="resv">Reservas</button>
+      <button data-tab="dishes">Platos y ofertas</button>
+    </div>
+    <div class="admin-body">
+      <div class="admin-section active" id="adminResv">
+        <table class="admin-table">
+          <thead>
+            <tr><th>Cliente</th><th>Fecha</th><th>Hora</th><th>Personas</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody id="resvTableBody"></tbody>
+        </table>
+        <div id="resvEmpty" class="empty-state" style="display:none;">Todavía no hay reservas registradas.</div>
+      </div>
+
+      <div class="admin-section" id="adminDishes">
+        <div class="dish-edit-row">
+          <span>Plato</span><span>Precio (S/)</span><span>Oferta</span><span></span><span></span>
+        </div>
+        <div id="dishEditList"></div>
+        <div class="new-dish-form">
+          <input type="text" id="newDishName" placeholder="Nombre del nuevo plato">
+          <input type="number" id="newDishPrice" placeholder="Precio S/" min="0" step="0.5">
+          <span></span>
+          <button class="btn btn-jade" id="addDishBtn" type="button">+ Agregar plato</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Panel de cuenta (cliente) -->
+<div class="account-overlay" id="accountOverlay">
+  <div class="account-panel">
+    <div class="modal-head">
+      <h3 id="accountTitle">Mi cuenta</h3>
+      <button class="modal-close" id="accountClose" aria-label="Cerrar">×</button>
+    </div>
+    <div class="account-body">
+      <p style="font-size:13.5px; color:#5b5346; margin-top:0;">Tus reservas registradas con esta cuenta:</p>
+      <div id="myReservations"></div>
+      <div id="myResvEmpty" class="empty-state" style="display:none;">Aún no tienes reservas. Completa el formulario de la sección "Reservar mesa".</div>
+      <button class="btn btn-ghost btn-block" id="logoutBtn" style="margin-top:18px;">Cerrar sesión</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+/* =========================================================================
+   CAPA DE DATOS — ahora conectada a la API real (Express + MongoDB Atlas).
+   Todas las funciones aquí hacen fetch() a /api/... en vez de usar localStorage.
+   El backend vive en server.js + /routes + /models (ver carpeta del proyecto).
+   ========================================================================= */
+const API_BASE = '/api'; // mismo origen: el backend sirve este HTML desde /public
+
+function getToken(){ return localStorage.getItem('kammen_token'); }
+function setToken(t){ localStorage.setItem('kammen_token', t); }
+function clearToken(){ localStorage.removeItem('kammen_token'); }
+
+function getCachedUser(){
+  const raw = localStorage.getItem('kammen_user');
+  return raw ? JSON.parse(raw) : null;
+}
+function setCachedUser(u){ localStorage.setItem('kammen_user', JSON.stringify(u)); }
+function clearCachedUser(){ localStorage.removeItem('kammen_user'); }
+
+async function api(path, { method = 'GET', body, auth = false } = {}){
+  const headers = { 'Content-Type': 'application/json' };
+  if (auth) {
+    const token = getToken();
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+  }
+  const res = await fetch(API_BASE + path, {
+    method,
+    headers,
+    body: body ? JSON.stringify(body) : undefined
+  });
+  let data = {};
+  try { data = await res.json(); } catch(e) { /* respuesta sin cuerpo */ }
+  if (!res.ok) {
+    const err = new Error(data.error || `Error ${res.status}`);
+    err.status = res.status;
+    throw err;
+  }
+  return data;
+}
+
+const DB = {
+  auth: {
+    async login(email, password){
+      const data = await api('/auth/login', { method: 'POST', body: { email, password } });
+      setToken(data.token);
+      setCachedUser(data.user);
+      return data.user;
+    },
+    async register({ name, email, phone, password }){
+      const data = await api('/auth/register', { method: 'POST', body: { name, email, phone, password } });
+      setToken(data.token);
+      setCachedUser(data.user);
+      return data.user;
+    },
+    logout(){
+      clearToken();
+      clearCachedUser();
+    },
+    currentUser(){
+      // Devuelve el último usuario conocido de forma síncrona (para pintar la UI al cargar)
+      // mientras /auth/me confirma en segundo plano que el token siga siendo válido.
+      return getToken() ? getCachedUser() : null;
+    },
+    async verifySession(){
+      if (!getToken()) return null;
+      try {
+        const data = await api('/auth/me', { auth: true });
+        setCachedUser(data.user);
+        return data.user;
+      } catch (err) {
+        // token expirado o inválido
+        clearToken();
+        clearCachedUser();
+        return null;
+      }
+    }
+  },
+  dishes: {
+    async all(){
+      const data = await api('/dishes');
+      return data.dishes;
+    },
+    async add(dish){
+      const data = await api('/dishes', { method: 'POST', body: dish, auth: true });
+      return data.dish;
+    },
+    async update(id, patch){
+      const data = await api(`/dishes/${id}`, { method: 'PUT', body: patch, auth: true });
+      return data.dish;
+    },
+    async remove(id){
+      await api(`/dishes/${id}`, { method: 'DELETE', auth: true });
+    }
+  },
+  reservations: {
+    async create(r){
+      const userId = getCachedUser()?.id || null;
+      const data = await api('/reservations', { method: 'POST', body: { ...r, userId } });
+      return data.reservation;
+    },
+    async all(){ // solo admin
+      const data = await api('/reservations', { auth: true });
+      return data.reservations;
+    },
+    async mine(){ // cliente autenticado
+      const data = await api('/reservations/mine', { auth: true });
+      return data.reservations;
+    },
+    async updateStatus(id, status){
+      await api(`/reservations/${id}/status`, { method: 'PATCH', body: { status }, auth: true });
+    },
+    async remove(id){
+      await api(`/reservations/${id}`, { method: 'DELETE', auth: true });
+    }
+  }
+};
+
+/* =========================================================================
+   RENDERIZADO DEL MENÚ (dinámico desde la API)
+   ========================================================================= */
+function formatPrice(n){ return 'S/ ' + Number(n).toFixed(0); }
+
+async function renderMenu(){
+  const grid = document.getElementById('menuGrid');
+  try {
+    const dishes = await DB.dishes.all();
+    grid.innerHTML = dishes.map(d => `
+      <div class="dish ${d.onOffer ? 'on-offer' : ''}">
+        ${d.onOffer ? '<span class="offer-badge">Oferta</span>' : ''}
+        <span class="no">${d.no}</span>
+        <h3>${d.name}</h3>
+        <p>${d.desc}</p>
+        <div class="price">
+          <span>${d.onOffer ? `<span class="old">${formatPrice(d.price)}</span>${formatPrice(d.offerPrice)}` : formatPrice(d.price)}</span>
+          <span class="seal-mini">招</span>
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1;">No se pudo cargar la carta. Verifica que el servidor esté corriendo y conectado a MongoDB.</div>`;
+    console.error(err);
+  }
+}
+
+/* =========================================================================
+   NAV / UI GENERAL
+   ========================================================================= */
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+menuToggle.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  menuToggle.setAttribute('aria-expanded', open);
+});
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+// Party stepper
+let party = 2;
+const partyCount = document.getElementById('partyCount');
+document.getElementById('partyPlus').addEventListener('click', () => {
+  party = Math.min(party + 1, 20);
+  partyCount.textContent = party;
+});
+document.getElementById('partyMinus').addEventListener('click', () => {
+  party = Math.max(party - 1, 1);
+  partyCount.textContent = party;
+});
+
+// Reservation form — ahora guarda en MongoDB vía la API
+document.getElementById('reserveForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const name = document.getElementById('rName').value;
+  const phone = document.getElementById('rPhone').value;
+  const date = document.getElementById('rDate').value;
+  const time = document.getElementById('rTime').value;
+  const note = document.getElementById('rNote').value;
+  const msg = document.getElementById('reserveMsg');
+  const submitBtn = this.querySelector('button[type="submit"]');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Enviando...';
+
+  try {
+    await DB.reservations.create({ name, phone, date, time, party, note });
+    msg.className = 'ok';
+    msg.style.background = '';
+    msg.style.color = '';
+    msg.style.border = '';
+    msg.textContent = `Gracias, ${name}. Tu solicitud para ${party} persona(s) el ${date} a las ${time} fue recibida. Te confirmaremos por WhatsApp en breve.`;
+    this.reset();
+    party = 2; partyCount.textContent = party;
+    if(document.getElementById('adminOverlay').classList.contains('show')) renderReservationsTable();
+  } catch (err) {
+    msg.className = 'ok';
+    msg.style.background = 'rgba(200,16,46,0.1)';
+    msg.style.color = 'var(--lacquer-deep)';
+    msg.style.border = '1px solid var(--lacquer)';
+    msg.textContent = 'No se pudo registrar la reserva: ' + err.message;
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Confirmar reserva';
+  }
+});
+
+/* =========================================================================
+   AUTENTICACIÓN
+   ========================================================================= */
+const authOverlay = document.getElementById('authOverlay');
+const authClose = document.getElementById('authClose');
+const tabLogin = document.getElementById('tabLogin');
+const tabSignup = document.getElementById('tabSignup');
+const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signupForm');
+const authMsg = document.getElementById('authMsg');
+const navActions = document.getElementById('navActions');
+const adminBar = document.getElementById('adminBar');
+
+function openAuthModal(){ authOverlay.classList.add('show'); authMsg.classList.remove('show'); authMsg.textContent=''; }
+function closeAuthModal(){ authOverlay.classList.remove('show'); }
+
+authClose.addEventListener('click', closeAuthModal);
+authOverlay.addEventListener('click', (e) => { if(e.target === authOverlay) closeAuthModal(); });
+
+tabLogin.addEventListener('click', () => {
+  tabLogin.classList.add('active'); tabSignup.classList.remove('active');
+  loginForm.style.display = 'block'; signupForm.style.display = 'none';
+});
+tabSignup.addEventListener('click', () => {
+  tabSignup.classList.add('active'); tabLogin.classList.remove('active');
+  signupForm.style.display = 'block'; loginForm.style.display = 'none';
+});
+
+function showAuthError(text){
+  authMsg.classList.add('show');
+  authMsg.style.background = 'rgba(200,16,46,0.1)';
+  authMsg.style.color = 'var(--lacquer-deep)';
+  authMsg.style.border = '1px solid var(--lacquer)';
+  authMsg.textContent = text;
+}
+
+function renderNavForUser(user){
+  if(!user){
+    navActions.innerHTML = `
+      <button class="btn btn-ghost" id="loginTrigger">Iniciar sesión</button>
+      <a href="#reservar" class="btn btn-primary">Reservar mesa</a>
+    `;
+    document.getElementById('loginTrigger').addEventListener('click', openAuthModal);
+    adminBar.classList.remove('show');
+    return;
+  }
+  navActions.innerHTML = `
+    <div class="userchip" id="userChip" style="cursor:pointer;" title="Ver mi cuenta">
+      <span class="av">${user.name[0].toUpperCase()}</span>${user.name.split(' ')[0]}
+    </div>
+    <a href="#reservar" class="btn btn-primary">Reservar mesa</a>
+  `;
+  document.getElementById('userChip').addEventListener('click', () => {
+    if(user.role === 'admin') openAdminPanel(); else openAccountPanel();
+  });
+
+  if(user.role === 'admin'){
+    adminBar.classList.add('show');
+  } else {
+    adminBar.classList.remove('show');
+  }
+}
+
+function signInUser(user){
+  renderNavForUser(user);
+  closeAuthModal();
+  if(user.role === 'admin') openAdminPanel();
+  else openAccountPanel();
+}
+
+loginForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const email = document.getElementById('liEmail').value.trim();
+  const pass = document.getElementById('liPass').value;
+  const submitBtn = this.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  try {
+    const user = await DB.auth.login(email, pass);
+    signInUser(user);
+  } catch (err) {
+    showAuthError(err.message || 'Correo o contraseña incorrectos.');
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
+signupForm.addEventListener('submit', async function(e){
+  e.preventDefault();
+  const name = document.getElementById('suName').value.trim();
+  const email = document.getElementById('suEmail').value.trim();
+  const phone = document.getElementById('suPhone').value.trim();
+  const pass = document.getElementById('suPass').value;
+  const submitBtn = this.querySelector('button[type="submit"]');
+  submitBtn.disabled = true;
+  try {
+    const user = await DB.auth.register({ name, email, phone, password: pass });
+    signInUser(user);
+  } catch (err) {
+    showAuthError(err.message || 'No se pudo crear la cuenta.');
+  } finally {
+    submitBtn.disabled = false;
+  }
+});
+
+/* =========================================================================
+   PANEL DE ADMINISTRACIÓN
+   ========================================================================= */
+const adminOverlay = document.getElementById('adminOverlay');
+const adminClose = document.getElementById('adminClose');
+const adminWho = document.getElementById('adminWho');
+
+function openAdminPanel(){
+  const user = getCachedUser();
+  adminWho.textContent = user ? `Conectado como ${user.name}` : 'Kam Men';
+  adminOverlay.classList.add('show');
+  renderReservationsTable();
+  renderDishEditList();
+}
+function closeAdminPanel(){ adminOverlay.classList.remove('show'); }
+
+document.getElementById('openAdminPanel').addEventListener('click', openAdminPanel);
+adminClose.addEventListener('click', closeAdminPanel);
+adminOverlay.addEventListener('click', (e) => { if(e.target === adminOverlay) closeAdminPanel(); });
+
+document.querySelectorAll('.admin-tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.admin-tabs button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+    document.getElementById(btn.dataset.tab === 'resv' ? 'adminResv' : 'adminDishes').classList.add('active');
+  });
+});
+
+async function renderReservationsTable(){
+  const body = document.getElementById('resvTableBody');
+  const empty = document.getElementById('resvEmpty');
+
+  let reservations = [];
+  try {
+    reservations = await DB.reservations.all();
+  } catch (err) {
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    empty.textContent = 'No se pudieron cargar las reservas: ' + err.message;
+    return;
+  }
+
+  if(reservations.length === 0){
+    body.innerHTML = '';
+    empty.style.display = 'block';
+    empty.textContent = 'Todavía no hay reservas registradas.';
+    return;
+  }
+  empty.style.display = 'none';
+
+  body.innerHTML = reservations.map(r => `
+    <tr data-id="${r._id}">
+      <td data-label="Cliente">${r.name}<br><span style="font-size:11.5px; color:#8a8070;">${r.phone || '—'}</span></td>
+      <td data-label="Fecha">${r.date || '—'}</td>
+      <td data-label="Hora">${r.time || '—'}</td>
+      <td data-label="Personas">${r.party}</td>
+      <td data-label="Estado"><span class="status-pill status-${r.status}">${r.status}</span></td>
+      <td data-label="Acciones">
+        <div class="row-actions">
+          ${r.status !== 'confirmada' ? `<button class="mini-btn confirm" data-action="confirm">Confirmar</button>` : ''}
+          ${r.status !== 'cancelada' ? `<button class="mini-btn cancel" data-action="cancel">Cancelar</button>` : ''}
+          <button class="mini-btn delete" data-action="delete">Eliminar</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  body.querySelectorAll('tr').forEach(row => {
+    const id = row.dataset.id;
+    row.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        btn.disabled = true;
+        try {
+          const action = btn.dataset.action;
+          if(action === 'confirm') await DB.reservations.updateStatus(id, 'confirmada');
+          if(action === 'cancel') await DB.reservations.updateStatus(id, 'cancelada');
+          if(action === 'delete') await DB.reservations.remove(id);
+          renderReservationsTable();
+        } catch (err) {
+          alert('No se pudo completar la acción: ' + err.message);
+          btn.disabled = false;
+        }
+      });
+    });
+  });
+}
+
+async function renderDishEditList(){
+  const list = document.getElementById('dishEditList');
+  let dishes = [];
+  try {
+    dishes = await DB.dishes.all();
+  } catch (err) {
+    list.innerHTML = `<div class="empty-state">No se pudieron cargar los platos: ${err.message}</div>`;
+    return;
+  }
+
+  list.innerHTML = dishes.map(d => `
+    <div class="dish-edit-row" data-id="${d._id}">
+      <input type="text" class="f-name" value="${(d.name || '').replace(/"/g,'&quot;')}">
+      <input type="number" class="f-price" value="${d.price}" min="0" step="0.5">
+      <label class="toggle-offer">
+        <input type="checkbox" class="f-offer" ${d.onOffer ? 'checked' : ''}>
+        ${d.onOffer ? `<input type="number" class="f-offerprice" value="${d.offerPrice ?? ''}" min="0" step="0.5" style="width:70px; padding:5px 7px; border:1px solid #d8cdb4; border-radius:3px;">` : '<span style="font-size:12px; color:#8a8070;">Marcar</span>'}
+      </label>
+      <button class="mini-btn confirm" data-action="save">Guardar</button>
+      <button class="mini-btn delete" data-action="remove">Eliminar</button>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.dish-edit-row').forEach(row => {
+    const id = row.dataset.id;
+    const offerCheckbox = row.querySelector('.f-offer');
+
+    offerCheckbox.addEventListener('change', async () => {
+      const dish = dishes.find(d => d._id === id);
+      try {
+        await DB.dishes.update(id, { onOffer: offerCheckbox.checked, offerPrice: offerCheckbox.checked ? (dish.offerPrice || dish.price) : null });
+        renderDishEditList();
+        renderMenu();
+      } catch (err) {
+        alert('No se pudo actualizar la oferta: ' + err.message);
+      }
+    });
+
+    row.querySelector('[data-action="save"]').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      btn.disabled = true;
+      const name = row.querySelector('.f-name').value.trim();
+      const price = parseFloat(row.querySelector('.f-price').value) || 0;
+      const onOffer = row.querySelector('.f-offer').checked;
+      const offerPriceInput = row.querySelector('.f-offerprice');
+      const offerPrice = onOffer ? (parseFloat(offerPriceInput?.value) || price) : null;
+      try {
+        await DB.dishes.update(id, { name, price, onOffer, offerPrice });
+        renderMenu();
+        renderDishEditList();
+      } catch (err) {
+        alert('No se pudo guardar el plato: ' + err.message);
+        btn.disabled = false;
+      }
+    });
+
+    row.querySelector('[data-action="remove"]').addEventListener('click', async (e) => {
+      const btn = e.currentTarget;
+      btn.disabled = true;
+      try {
+        await DB.dishes.remove(id);
+        renderMenu();
+        renderDishEditList();
+      } catch (err) {
+        alert('No se pudo eliminar el plato: ' + err.message);
+        btn.disabled = false;
+      }
+    });
+  });
+}
+
+document.getElementById('addDishBtn').addEventListener('click', async () => {
+  const nameInput = document.getElementById('newDishName');
+  const priceInput = document.getElementById('newDishPrice');
+  const name = nameInput.value.trim();
+  const price = parseFloat(priceInput.value) || 0;
+  if(!name) { nameInput.focus(); return; }
+  try {
+    await DB.dishes.add({ name, desc: 'Nuevo plato — edita la descripción próximamente.', price });
+    nameInput.value = ''; priceInput.value = '';
+    renderMenu();
+    renderDishEditList();
+  } catch (err) {
+    alert('No se pudo agregar el plato: ' + err.message);
+  }
+});
+
+/* =========================================================================
+   PANEL DE CUENTA (cliente)
+   ========================================================================= */
+const accountOverlay = document.getElementById('accountOverlay');
+const accountClose = document.getElementById('accountClose');
+const accountTitle = document.getElementById('accountTitle');
+const logoutBtn = document.getElementById('logoutBtn');
+
+async function openAccountPanel(){
+  const user = getCachedUser();
+  if(!user) return;
+  accountTitle.textContent = `Hola, ${user.name.split(' ')[0]}`;
+  const myList = document.getElementById('myReservations');
+  const myEmpty = document.getElementById('myResvEmpty');
+
+  let myReservations = [];
+  try {
+    myReservations = await DB.reservations.mine();
+  } catch (err) {
+    myList.innerHTML = '';
+    myEmpty.style.display = 'block';
+    myEmpty.textContent = 'No se pudieron cargar tus reservas: ' + err.message;
+    accountOverlay.classList.add('show');
+    return;
+  }
+
+  if(myReservations.length === 0){
+    myList.innerHTML = '';
+    myEmpty.style.display = 'block';
+    myEmpty.textContent = 'Aún no tienes reservas. Completa el formulario de la sección "Reservar mesa".';
+  } else {
+    myEmpty.style.display = 'none';
+    myList.innerHTML = myReservations.map(r => `
+      <div class="my-res-card">
+        <div>
+          <div class="d">${r.date || '—'} · ${r.time || '—'} · ${r.party} persona(s)</div>
+          <div>${r.note || 'Sin pedido especial'}</div>
+        </div>
+        <span class="status-pill status-${r.status}">${r.status}</span>
+      </div>
+    `).join('');
+  }
+  accountOverlay.classList.add('show');
+}
+function closeAccountPanel(){ accountOverlay.classList.remove('show'); }
+
+accountClose.addEventListener('click', closeAccountPanel);
+accountOverlay.addEventListener('click', (e) => { if(e.target === accountOverlay) closeAccountPanel(); });
+
+logoutBtn.addEventListener('click', () => {
+  DB.auth.logout();
+  closeAccountPanel();
+  renderNavForUser(null);
+});
+
+/* =========================================================================
+   INICIALIZACIÓN
+   ========================================================================= */
+(async function init(){
+  renderMenu();
+  // Pinta de inmediato con el usuario cacheado (si hay) para que la UI no parpadee...
+  renderNavForUser(DB.auth.currentUser());
+  // ...y en paralelo confirma con el servidor que el token siga siendo válido.
+  const verified = await DB.auth.verifySession();
+  renderNavForUser(verified);
+})();
+</script>
+
+</body>
+</html>
